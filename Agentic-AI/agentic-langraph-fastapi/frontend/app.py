@@ -38,6 +38,7 @@ if user_query:
     with st.chat_message("assistant"): #create a chat container for ai response
         with st.spinner("Thinking..."):
             try:
+                api_url=os.getenv("API_URL","http://localhost:4000")
                 payload={
                     "model_name":model_name,
                     "model_provider":model_provider,
@@ -52,7 +53,7 @@ if user_query:
                     "message":[user_query],
                     "allow_search":allow_search
                 }
-                res=requests.post("http://localhost:4000/chat",json=payload)
+                res=requests.post(f"{api_url}",json=payload)
                 response=res.json()
                 print(response)
                 st.markdown(response)
